@@ -10,10 +10,10 @@ import org.openqa.selenium.*;
 
 public class Main {
     private static WebDriver driver;
-    protected String baseUrl = "https://www.google.com.ua/";
+    private String baseUrl = "https://www.google.com.ua/";
 
     @BeforeClass
-    public void setUp() throws Exception {
+    public void setUp(){
         System.setProperty("webdriver.chrome.driver", "F:\\repos\\test\\src\\drivers\\chromedriver_2_29.exe");
         ChromeOptions options = new ChromeOptions();
         ChromeDriver chromeDriver = new ChromeDriver(options);
@@ -23,7 +23,7 @@ public class Main {
     }
 
     @AfterClass(alwaysRun = true)
-    public void tearDown() throws Exception {
+    public void tearDown(){
         driver.quit();
     }
 
