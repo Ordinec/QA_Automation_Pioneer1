@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.*;
 import org.openqa.selenium.*;
+import pages.LoginPage;
 
 public class Main {
     private static WebDriver driver;
@@ -29,6 +30,14 @@ public class Main {
 
     public static WebDriver getDriver(){
         return driver;
+    }
+
+    public static void waitInSeconds(int seconds){
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }
