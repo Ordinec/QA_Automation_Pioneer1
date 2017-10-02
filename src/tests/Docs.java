@@ -5,7 +5,7 @@ import pages.MainPage;
 
 public class Docs extends Main{
 
-    @Test
+    @Test(priority = 1)
     public void docsTest(){
         String folderName = "Test Folder";
         MainPage mainPage = new MainPage();

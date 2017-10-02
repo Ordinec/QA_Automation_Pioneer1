@@ -1,13 +1,15 @@
 package tests;
 
+import java.awt.*;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.*;
 import org.openqa.selenium.*;
-import pages.LoginPage;
 
 public class Main {
     private static WebDriver driver;
@@ -20,7 +22,7 @@ public class Main {
         ChromeDriver chromeDriver = new ChromeDriver(options);
         driver = new EventFiringWebDriver(chromeDriver);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        getDriver().get(baseUrl + "/?gfe_rd=cr&dcr=0&ei=6LC6Wf3LLMSv8weBl5qQBA&gws_rd=ssl");
+        getDriver().get(baseUrl);
     }
 
     @AfterClass(alwaysRun = true)
@@ -38,6 +40,15 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void maximizeScreen(WebDriver driver) {
+        java.awt.Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Point position = new Point(0, 0);
+        driver.manage().window().setPosition(position);
+        Dimension maximizedScreenSize =
+                new Dimension(screenSize.width, screenSize.height);
+        driver.manage().window().setSize(maximizedScreenSize);
     }
 
 }

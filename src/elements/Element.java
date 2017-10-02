@@ -31,6 +31,11 @@ public abstract class Element {
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
+    public void waitForElementToBeClickable() {
+        WebDriverWait wait = new WebDriverWait(getDriver(), 30);
+        wait.until(ExpectedConditions.elementToBeClickable(by));
+    }
+
     public void waitAndClick() {
 //        TestCase.setImplicitlyWait(0);
 //        log.info("Attempt to wait until element found " + by + " will be appeared");

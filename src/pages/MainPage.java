@@ -4,8 +4,6 @@ import elements.Button;
 import elements.TextInput;
 import org.openqa.selenium.By;
 
-import javax.swing.filechooser.FileSystemView;
-
 import static pages.LoginPage.loginPageisShown;
 
 public class MainPage {
@@ -22,6 +20,7 @@ public class MainPage {
     private Button navigationButton = new Button(By.cssSelector("[title='Додатки Google']"));
     private Button moreButton = new Button(By.linkText("Більше"));
     private Button doccumentsButton = new Button(By.xpath("//span[text()='Документи']"));
+
     private TextInput recoveryEmailInput = new TextInput(By.cssSelector("placeholder='you@example.com'"));
 
     public MainPage activateKeyboard(){
