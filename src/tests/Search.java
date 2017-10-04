@@ -7,10 +7,14 @@ public class Search extends Main{
 
     @Test
     public void searchWithKeyboard() {
+        String publication = "Что такое Selenium? / Хабрахабр";
         MainPage mainPage = new MainPage();
         mainPage.activateKeyboard()
                 .enterSearchCriteria()
                 .performSearch()
-                .clickOnSearchResultLink("Что такое Selenium? / Хабрахабр");
+                .clickOnSearchResultLink(publication)
+                .openUserProfile()
+                .openPublications()
+                .verifyPublicationPresence(publication);
     }
 }

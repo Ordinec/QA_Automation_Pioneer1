@@ -9,8 +9,9 @@ public class SearchResultsPage {
         return new Button(By.linkText(linkText));
     }
 
-    public SearchResultsPage clickOnSearchResultLink(String linkText) {
+    public HabrPublicationPage clickOnSearchResultLink(String linkText) {
         searchResultLink(linkText).click();
-        return this;
+        return new HabrPublicationPage();
     }
+
 }

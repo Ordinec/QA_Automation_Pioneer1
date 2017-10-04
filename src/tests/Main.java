@@ -17,12 +17,13 @@ public class Main {
 
     @BeforeClass
     public void setUp(){
-        System.setProperty("webdriver.chrome.driver", "F:\\repos\\test\\src\\drivers\\chromedriver_2_29.exe");
+        System.setProperty("webdriver.chrome.driver", Main.class.getResource("/drivers/chromedriver_2_29.exe").getFile());
         ChromeOptions options = new ChromeOptions();
         ChromeDriver chromeDriver = new ChromeDriver(options);
         driver = new EventFiringWebDriver(chromeDriver);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         getDriver().get(baseUrl);
+        maximizeScreen(driver);
     }
 
     @AfterClass(alwaysRun = true)
