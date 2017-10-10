@@ -59,14 +59,20 @@ public abstract class Element {
 
     public boolean isPresent() {
         try {
-            try {
-                composeWebElement(by).isDisplayed();
-            } catch (NoSuchElementException e) {
-                return false;
-            }
+            composeWebElement(by).isDisplayed();
         }catch (StaleElementReferenceException e){
             composeWebElement(by).isDisplayed();
+        }catch (NoSuchElementException e) {
+            return false;
         }
         return true;
+    }
+
+    public void scrollToElement() {
+        try {
+            ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView();", composeWebElement(by));
+        } catch (StaleElementReferenceException ignore) {
+            //ignore this exception
+        }
     }
 }

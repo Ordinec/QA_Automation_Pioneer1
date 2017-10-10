@@ -1,6 +1,8 @@
 package tests;
 
 import java.awt.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Dimension;
@@ -51,5 +53,23 @@ public class Main {
                 new Dimension(screenSize.width, screenSize.height);
         driver.manage().window().setSize(maximizedScreenSize);
     }
+
+    public static String getUrlStatusCode(String url){
+        String result = null;
+        try{
+            URL address = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection)address.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+
+            int code = connection.getResponseCode();
+            result = ""+code;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 
 }
