@@ -5,6 +5,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import conf.CaptureScreenShotOnFailureListener;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,6 +14,7 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.*;
 import org.openqa.selenium.*;
 
+@Listeners(CaptureScreenShotOnFailureListener.class)
 public class Main {
     private static WebDriver driver;
     private String baseUrl = "https://www.google.com.ua/";
@@ -30,11 +32,15 @@ public class Main {
 
     @AfterClass(alwaysRun = true)
     public void tearDown(){
-        driver.quit();
+        stopDriver();
     }
 
     public static WebDriver getDriver(){
         return driver;
+    }
+
+    public static void stopDriver(){
+        driver.quit();
     }
 
     public static void waitInSeconds(int seconds){
