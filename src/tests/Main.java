@@ -21,7 +21,7 @@ public class Main {
 
     @BeforeClass
     public void setUp(){
-        System.setProperty("webdriver.chrome.driver", Main.class.getResource("/drivers/chromedriver_2_29.exe").getFile());
+        System.setProperty("webdriver.chrome.driver", Main.class.getResource("/drivers/chromedriver_2_33.exe").getFile());
         ChromeOptions options = new ChromeOptions();
         ChromeDriver chromeDriver = new ChromeDriver(options);
         driver = new EventFiringWebDriver(chromeDriver);
