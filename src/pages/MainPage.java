@@ -5,6 +5,7 @@ import elements.TextInput;
 import org.openqa.selenium.By;
 
 import static pages.LoginPage.loginPageisShown;
+import static tests.Main.getDriver;
 
 public class MainPage {
 
@@ -58,5 +59,11 @@ public class MainPage {
         return new DocumentsPage();
     }
 
-
+    public EmailPage goToEmail() {
+        getDriver().get("http://mail.google.com");
+        if(loginPageisShown()){
+            new LoginPage().login();
+        }
+        return new EmailPage();
+    }
 }
