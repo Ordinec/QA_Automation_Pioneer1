@@ -1,5 +1,6 @@
 package elements;
 
+import conf.CustomLogger;
 import org.openqa.selenium.By;
 
 public class Button extends Element {

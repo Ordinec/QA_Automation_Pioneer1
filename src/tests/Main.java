@@ -1,11 +1,14 @@
 package tests;
 
 import java.awt.*;
+import java.beans.EventHandler;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import conf.CaptureScreenShotOnFailureListener;
+import conf.LoggingEventListener;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,7 +19,8 @@ import org.openqa.selenium.*;
 
 @Listeners(CaptureScreenShotOnFailureListener.class)
 public class Main {
-    private static WebDriver driver;
+    private static EventFiringWebDriver driver;
+    protected static final Logger LOG = Logger.getLogger(Main.class.getName());
     private String baseUrl = "https://www.google.com.ua/";
 
     @BeforeClass
@@ -25,9 +29,12 @@ public class Main {
         ChromeOptions options = new ChromeOptions();
         ChromeDriver chromeDriver = new ChromeDriver(options);
         driver = new EventFiringWebDriver(chromeDriver);
+        LoggingEventListener handler = new LoggingEventListener();
+        driver.register(handler);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         getDriver().get(baseUrl);
         maximizeScreen(driver);
+        LOG.info("Running user agent: " + resolveUserAgent(chromeDriver));
     }
 
     @AfterClass(alwaysRun = true)
@@ -77,5 +84,8 @@ public class Main {
         return result;
     }
 
+    private static String resolveUserAgent(ChromeDriver chromeDriver) {
+        return (String) chromeDriver.executeScript("return navigator.userAgent;");
+    }
 
 }

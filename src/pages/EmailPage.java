@@ -11,10 +11,10 @@ import java.util.List;
 public class EmailPage {
 
     private Button composeButton = new Button(By.xpath("//div[text()='COMPOSE']"));
+    private Button sendButton = new Button(By.cssSelector("[aria-label='Send \u202A(Ctrl-Enter)\u202C']"));
 
     private TextInput toInputBox = new TextInput(By.cssSelector("[aria-label='To']"));
     private TextInput subjectInputBox = new TextInput(By.cssSelector("[name='subjectbox']"));
-    private Button sendButton = new Button(By.cssSelector("[aria-label='Send \u202A(Ctrl-Enter)\u202C']"));
 
     public EmailPage sendEmail() {
         composeButton.click();

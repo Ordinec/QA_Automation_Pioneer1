@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.junit.Assert.fail;
+import static tests.Main.waitInSeconds;
 
 public class EmailService {
 
@@ -38,25 +39,16 @@ public class EmailService {
         return store;
     }
 
-    private static IMAPFolder waitForEmailInFolder(Store store, String folderName) throws MessagingException {
-        IMAPFolder workFolder = null;
-        try {
-            workFolder = (IMAPFolder) store.getFolder(PARENT_FOLDER + folderName);
-        } catch (javax.mail.MessagingException e) {
-            e.printStackTrace();
-        }
+    private static IMAPFolder waitForEmailInFolder(Store store, String folderName){
+        IMAPFolder workFolder = getFolder(store, folderName);
         int seconds = 0;
         try {
             while (workFolder.getMessageCount() == 0) {
-                workFolder = (IMAPFolder) store.getFolder(PARENT_FOLDER + folderName);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                workFolder = getFolder(store, folderName);
+                waitInSeconds(1);
                 seconds++;
                 if (seconds == 3000) {
-                    fail("Email from Chorus has not been delivered after 5 min waiting");
+                    fail("Email has not been delivered after 5 min waiting");
                     break;
                 }
             }
@@ -66,29 +58,27 @@ public class EmailService {
         return workFolder;
     }
 
-    private static Message[] getMessages(IMAPFolder folder) throws MessagingException, IOException {
+    private static IMAPFolder getFolder(Store store, String folderName){
+        IMAPFolder result = null;
+        try {
+            result = (IMAPFolder) store.getFolder(PARENT_FOLDER + folderName);
+        } catch (javax.mail.MessagingException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    private static Message[] getMessages(IMAPFolder folder) throws javax.mail.MessagingException {
         if (!folder.isOpen()) {
-            try {
-                folder.open(Folder.READ_WRITE);
-            } catch (javax.mail.MessagingException e) {
-                e.printStackTrace();
-            }
+            folder.open(Folder.READ_WRITE);
         }
         Message[] messages = new Message[0];
-        try {
-            messages = folder.getMessages();
-        } catch (javax.mail.MessagingException e) {
-            e.printStackTrace();
-        }
-        try {
-            CustomLogger.log("No of Messages : " + folder.getMessageCount());
-        } catch (javax.mail.MessagingException e) {
-            e.printStackTrace();
-        }
+        messages = folder.getMessages();
+        CustomLogger.log("No of Messages : " + folder.getMessageCount());
         return messages;
     }
 
-    private static List<EmailData> getEmailDataFromMessages(Message[] messages) throws MessagingException, IOException {
+    private static List<EmailData> getEmailDataFromMessages(Message[] messages) {
         List<EmailData> emailsList;
         emailsList = new ArrayList<EmailData>();
         for (int i = 0; i < messages.length; i++) {
@@ -97,7 +87,7 @@ public class EmailService {
             Message msg = messages[i];
 
             try {
-                CustomLogger.log("Subject: " + msg.getSubject());
+            CustomLogger.log("Subject: " + msg.getSubject());
             CustomLogger.log("From: " + msg.getFrom()[0]);
             CustomLogger.log("To: " + msg.getAllRecipients()[0]);
             CustomLogger.log("Date: " + msg.getReceivedDate());
@@ -105,14 +95,16 @@ public class EmailService {
             emailsList.add(new EmailData(msg.getSubject(), msg.getFrom()[0], msg.getAllRecipients()[0], msg.getReceivedDate(), msg.getContent()));
             } catch (javax.mail.MessagingException e) {
                 e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return emailsList;
     }
 
-    private static void removeAllMessages(Store store, Message[] messages, IMAPFolder folder) throws MessagingException {
+    private static void removeAllMessages(Store store, Message[] messages, IMAPFolder folder){
         //remove all messages in the folder after reading them
-        Folder trash = null;
+        Folder trash;
         try {
             trash = store.getFolder(GMAIL_TRASH_FOLDER);
         for (Message m : messages) {
