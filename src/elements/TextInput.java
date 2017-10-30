@@ -9,6 +9,6 @@ public class TextInput extends Element {
     }
 
     public void fillIn(String text) {
-        composeWebElement(by).sendKeys(text);
+        composeWebElement().sendKeys(text);
     }
 }

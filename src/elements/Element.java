@@ -19,7 +19,7 @@ public abstract class Element {
         this.by = by;
     }
 
-    protected static WebElement composeWebElement(By by){
+    protected WebElement composeWebElement(){
         return getDriver().findElement(by);
     }
 
@@ -61,9 +61,9 @@ public abstract class Element {
 
     public boolean isPresent() {
         try {
-            composeWebElement(by).isDisplayed();
+            composeWebElement().isDisplayed();
         }catch (StaleElementReferenceException e){
-            composeWebElement(by).isDisplayed();
+            composeWebElement().isDisplayed();
         }catch (NoSuchElementException e) {
             return false;
         }
@@ -72,7 +72,7 @@ public abstract class Element {
 
     public void scrollToElement() {
         try {
-            ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView();", composeWebElement(by));
+            ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView();", composeWebElement());
         } catch (StaleElementReferenceException ignore) {
             //ignore this exception
         }

@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import conf.CaptureScreenShotOnFailureListener;
 import conf.LoggingEventListener;
+import conf.PropertyLoader;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,7 +22,9 @@ import org.openqa.selenium.*;
 public class Main {
     private static EventFiringWebDriver driver;
     protected static final Logger LOG = Logger.getLogger(Main.class.getName());
-    private String baseUrl = "https://www.google.com.ua/";
+    public static String env = "dev";
+    private String baseUrl = PropertyLoader.loadProperty("app.url");
+    private static final String OS = System.getProperty("os.name").toLowerCase();
 
     @BeforeClass
     public void setUp(){
