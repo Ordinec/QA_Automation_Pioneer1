@@ -10,6 +10,6 @@ public class Button extends Element {
     }
 
     public void click(){
-        composeWebElement(by).click();
+        composeWebElement().click();
     }
 }

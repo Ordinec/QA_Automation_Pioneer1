@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class PropertyLoader {
-    private static final String PROPERTIES_DEFAULT = "/default.properties";
-    private static final String PROPERTIES_ENV_VAR = "config.path";
+    private static final String PROPERTIES_DEFAULT = "/conf/default.properties";
+    private static final String PROPERTIES_ENV_VAR = "/conf/config.path";
     private static PropertyLoader instance;
     private Properties propertyDefault;
     private Properties property;
