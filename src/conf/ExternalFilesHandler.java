@@ -63,7 +63,7 @@ public class ExternalFilesHandler {
             }
             log.info("- - Ok! File executed successfully");
         } else {
-            log.info("Current OS does not support .exe files, so method 'UploadFilesStep2Steps.dragNDropFiles' is skipped");
+            log.info("Current OS does not support .exe files, so method 'dragNDropFiles' is skipped");
         }
         return this;
     }

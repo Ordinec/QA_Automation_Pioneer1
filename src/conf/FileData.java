@@ -138,12 +138,12 @@ public class FileData {
         }
     }
 
-    public File createWatersFolder() {
-        parentFolder = new File(System.getProperty("user.home") + File.separator + "WatersFolder");
+    public File createWFolder() {
+        parentFolder = new File(System.getProperty("user.home") + File.separator + "123Folder");
         if (!parentFolder.exists()) {
             parentFolder.mkdir();
         }
-        folder = new File(parentFolder + File.separator + randomizeName("Waters") + ".raw");
+        folder = new File(parentFolder + File.separator + randomizeName("123") + ".raw");
         boolean isCreated = folder.mkdir();
         if (isCreated) {
             log.info("Temporary folder with path " + folder + " created ");
@@ -153,8 +153,8 @@ public class FileData {
         return folder;
     }
 
-    public void createWatersFolderWithSizeInMb(int size){
-        createWatersFolder();
+    public void createFolderWithSizeInMb(int size){
+        createWFolder();
         for (String file : getFiles()) {
             final File targetFile = new File(getFolder(), file);
 
