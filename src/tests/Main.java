@@ -24,7 +24,7 @@ public class Main {
     protected static final Logger LOG = Logger.getLogger(Main.class.getName());
     public static String env = "dev";
     private String baseUrl = PropertyLoader.loadProperty("app.url");
-    private static final String OS = System.getProperty("os.name").toLowerCase();
+    public static final String OS = System.getProperty("os.name").toLowerCase();
 
     @BeforeClass
     public void setUp(){
